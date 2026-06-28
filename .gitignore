@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+
+# Environments
+.env
+*.env
+loan_default/
+envs/
+
+# Data (don't push raw data to GitHub)
+data/
+
+# Model files (can be large)
+models/*.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
