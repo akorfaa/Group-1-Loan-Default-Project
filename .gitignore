@@ -11,9 +11,6 @@ __pycache__/
 loan_default/
 envs/
 
-# Model files (can be large)
-models/*.pkl
-
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb
