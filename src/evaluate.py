@@ -82,6 +82,8 @@ def find_best_threshold(y_test, y_prob, target_recall=0.65):
 
     best_threshold = 0.5
     best_f1 = 0
+    best_recall = 0
+    best_precision = 0
 
     for p, r, t in zip(precisions, recalls, thresholds):
         if r >= target_recall:
@@ -89,9 +91,11 @@ def find_best_threshold(y_test, y_prob, target_recall=0.65):
             if f1 > best_f1:
                 best_f1 = f1
                 best_threshold = t
+                best_recall = r
+                best_precision = p
 
     print(
-        f"\nBest threshold: {best_threshold:.3f} → Recall: {r:.2f}, Precision: {p:.2f}, F1: {best_f1:.2f}"
+        f"\nBest threshold: {best_threshold:.3f} → Recall: {best_recall:.2f}, Precision: {best_precision:.2f}, F1: {best_f1:.2f}"
     )
     return best_threshold
 

@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from .config import (
@@ -18,7 +17,7 @@ def load_data(path=DATA_PATH):
     """Load the Nigeria loan default dataset."""
     # TODO: Read the CSV file and return a DataFrame
     # Hint: pd.read_csv(path)
-    df = pd.read_csv(DATA_PATH)
+    df = pd.read_csv(path)
     return df
 
 

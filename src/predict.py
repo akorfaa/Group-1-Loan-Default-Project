@@ -49,8 +49,8 @@ def predict_batch(model, df):
     Returns original df with Prediction, Probability, Label columns added.
     """
     # TODO: copy and process df
-    df_copy = df.copy()
-    df_copy = clean_data(df_copy)
+    result = df.copy()
+    df_copy = clean_data(result.copy())
     df_copy = encode_features(df_copy)
     if TARGET_COL in df_copy.columns:
         df_copy = df_copy.drop(columns=[TARGET_COL], errors="ignore")
@@ -60,10 +60,10 @@ def predict_batch(model, df):
     # Get predictions first before adding any new columns
     predictions = model.predict(df_copy)
     probabilities = model.predict_proba(df_copy)[:, 1]
-    df_copy["Prediction"] = predictions
-    df_copy["Probability"] = probabilities
-    df_copy["Label"] = df_copy["Prediction"].apply(
+    result["Prediction"] = predictions
+    result["Probability"] = probabilities
+    result["Label"] = result["Prediction"].apply(
         lambda x: "Default" if x == 1 else "Repaid"
     )
     # TODO: add columns and return
-    return df_copy
+    return result

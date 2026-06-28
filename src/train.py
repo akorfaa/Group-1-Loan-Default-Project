@@ -1,16 +1,14 @@
 import os
 import pickle
 import pandas as pd
-import numpy as np
-from sklearn.model_selection import RandomizedSearchCV, StratifiedKFold
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, classification_report
-from sklearn.utils.class_weight import compute_sample_weight
 from xgboost import XGBClassifier
 import lightgbm as lgb
-from scipy.stats import randint, loguniform, uniform
+from scipy.stats import randint, loguniform
 
 from .preprocessing import load_data, prepare_features
 from .config import MODEL_PATH, RANDOM_STATE
