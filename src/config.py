@@ -8,6 +8,8 @@ TARGET_COL   = 'target'
 TEST_SIZE    = 0.2
 RANDOM_STATE = 42
 
+THRESHOLD = 0.431 # Found after tuning threshold to maximize recall for the default class (1) while maintaining reasonable precision.
+
 DROP_COLS = ['level_of_education_clients']  # 90% missing — too sparse to use
 
 CATEGORICAL_COLS = [

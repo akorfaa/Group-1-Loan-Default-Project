@@ -89,6 +89,7 @@ def plot_feature_importance(model, X_test, top_n=15):
         .sort_values("Importance", ascending=False)
         .head(top_n)
     )
+    print(importance_df.to_string(index=False))  # ADD THIS LINE
 
     plt.figure(figsize=(8, 6))
     sns.barplot(x="Importance", y="Feature", data=importance_df, palette="Blues_r")
@@ -143,3 +144,4 @@ if __name__ == "__main__":
             y_test, y_pred_adjusted, target_names=["Repaid", "Default"]
         )
     )
+    plot_confusion_matrix(y_test, y_pred_adjusted)

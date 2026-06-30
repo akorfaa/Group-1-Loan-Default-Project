@@ -1,7 +1,7 @@
 import pickle
 import pandas as pd
 from .preprocessing import clean_data, encode_features
-from .config import MODEL_PATH, TARGET_COL
+from .config import MODEL_PATH, TARGET_COL, THRESHOLD
 
 
 def load_model(path=MODEL_PATH):
@@ -33,8 +33,8 @@ def predict_single(model, input_dict):
     # TODO: align_columns
     df = align_columns(df, model)
     # TODO: model.predict and model.predict_proba
-    prediction = model.predict(df)
     probability = model.predict_proba(df)[:, 1]
+    prediction = (probability >= THRESHOLD).astype(int)
     # TODO: return {'prediction': int, 'label': str, 'probability': float}
     return {
         "prediction": int(prediction[0]),
@@ -58,8 +58,8 @@ def predict_batch(model, df):
     df_copy = align_columns(df_copy, model)
     # TODO: model.predict and model.predict_proba
     # Get predictions first before adding any new columns
-    predictions = model.predict(df_copy)
     probabilities = model.predict_proba(df_copy)[:, 1]
+    predictions = (probabilities >= THRESHOLD).astype(int)
     result["Prediction"] = predictions
     result["Probability"] = probabilities
     result["Label"] = result["Prediction"].apply(
