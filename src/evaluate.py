@@ -1,3 +1,4 @@
+import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -74,6 +75,30 @@ def plot_roc_curve(y_test, y_prob):
     plt.show()
 
 
+def plot_feature_importance(model, X_test, top_n=15):
+    """Plot top N most important features."""
+    if not hasattr(model, "feature_importances_"):
+        print("This model doesn't support feature importances.")
+        return
+
+    importances = model.feature_importances_
+    feature_names = X_test.columns.tolist()
+
+    importance_df = (
+        pd.DataFrame({"Feature": feature_names, "Importance": importances})
+        .sort_values("Importance", ascending=False)
+        .head(top_n)
+    )
+
+    plt.figure(figsize=(8, 6))
+    sns.barplot(x="Importance", y="Feature", data=importance_df, palette="Blues_r")
+    plt.title(f"Top {top_n} Feature Importances")
+    plt.xlabel("Importance")
+    plt.ylabel("Feature")
+    plt.tight_layout()
+    plt.show()
+
+
 # Finding the best threshold with a high recall (>= 0.65) and the best F1 score
 def find_best_threshold(y_test, y_prob, target_recall=0.65):
     from sklearn.metrics import precision_recall_curve
@@ -107,6 +132,7 @@ if __name__ == "__main__":
     y_pred, y_prob, roc_auc, avg_precision = evaluate_model(model, X_test, y_test)
     plot_confusion_matrix(y_test, y_pred)
     plot_roc_curve(y_test, y_prob)
+    plot_feature_importance(model, X_test)
     # Threshold tuning — find the best threshold for high recall (>= 0.65) and best F1 score
     threshold = find_best_threshold(y_test, y_prob, target_recall=0.65)
     y_pred_adjusted = (y_prob >= threshold).astype(int)
