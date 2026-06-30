@@ -54,6 +54,16 @@ with tab1:
         prev_num_loans = st.number_input("Previous Number of Loans", 0, 50, 3)
         prev_late_payments = st.number_input("Previous Late Payments", 0, 20, 0)
         prev_late_payment_rate = st.slider("Previous Late Payment Rate", 0.0, 1.0, 0.0)
+        prev_avg_days_to_repay = st.number_input(
+            "Avg Days to Repay Previous Loans",
+            -30.0,
+            120.0,
+            0.0,
+            help="Negative = paid early, Positive = paid late",
+        )
+        prev_avg_loan_duration = st.number_input(
+            "Avg Previous Loan Duration (Days)", 7.0, 365.0, 30.0
+        )
         approval_month = st.selectbox("Approval Month", list(range(1, 13)))
         approval_year = st.selectbox("Approval Year", [2017, 2018, 2019, 2020])
 
@@ -82,10 +92,10 @@ with tab1:
             "prev_avg_termdays": termdays,
             "prev_max_loannumber": loannumber,
             "prev_avg_interest_rate": (totaldue - loanamount) / loanamount,
-            "prev_avg_loan_duration": termdays,
+            "prev_avg_loan_duration": prev_avg_loan_duration,
             "prev_late_payments": prev_late_payments,
             "prev_late_payment_rate": prev_late_payment_rate,
-            "prev_avg_days_to_repay": 0.0,
+            "prev_avg_days_to_repay": prev_avg_days_to_repay,
         }
         result = predict_single(model, input_data)
         st.divider()
